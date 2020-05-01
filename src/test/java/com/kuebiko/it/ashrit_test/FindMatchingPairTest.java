@@ -12,7 +12,6 @@ public class FindMatchingPairTest {
     public void totalMatchingPair() {
         int[] arr = {10, 20, 10, 10};
         int a = findMatchingPair.totalMatchingPair(arr);
-
         Assert.assertEquals(1, a);
     }
 

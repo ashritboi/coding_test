@@ -1,6 +1,8 @@
 package com.kuebiko.it.design.farm;
 
 import com.kuebiko.it.design.farm.exception.NotYetImplementedException;
+
+import java.time.LocalDateTime;
 import java.util.concurrent.Callable;
 
 public final class Egg {

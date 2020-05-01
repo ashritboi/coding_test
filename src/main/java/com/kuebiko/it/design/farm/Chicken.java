@@ -4,12 +4,9 @@ import com.kuebiko.it.design.farm.exception.NotYetImplementedException;
 import com.opencsv.CSVWriter;
 
 import java.io.*;
-import java.sql.Time;
-import java.time.Instant;
+
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Chicken implements Bird {
 
@@ -26,7 +23,7 @@ public class Chicken implements Bird {
     this.name = name;
   }
 
-  static long initialize()  {
+  public static long initialize()  {
     InputStream input = null;
     try {
       input = new FileInputStream(propurl);
@@ -51,18 +48,17 @@ public class Chicken implements Bird {
      l = LocalDateTime.now();
     System.out.println(String.format("chicken(%s) laid an egg at %s", name, l));
 
-    Egg egg = new Egg(this::hatch_period);
-    System.out.println(String.format("Egg laid at %s Hatched an egg at %s", l, l1));
-
+    Egg egg = new Egg(this::hatch_sleep);
+    System.out.println(String.format("Chicken Egg laid at %s Hatched an egg at %s", this.l, hatch_sleep().l1));
     this.eggs.add(egg);
-    writeInCsv(this.name,l,l1);
+    writeInCsv(this.name,this.l, this.l1);
     return egg;
 
   }
 
 
-public Chicken hatch_period() throws InterruptedException {
-    int incubation_period= (int)HATCHING_PERIOD_MINS *60*1000; //
+public Chicken hatch_sleep() throws InterruptedException {
+    int incubation_period= (int)HATCHING_PERIOD_MINS * 1000;
     Thread.sleep(incubation_period);
     this.l1 = LocalDateTime.now();
     return this;
@@ -71,17 +67,13 @@ public Chicken hatch_period() throws InterruptedException {
 private void writeInCsv(String s, LocalDateTime l, LocalDateTime l1){
   File file = new File(CSVpath);
   try {
-    // create FileWriter object with file as parameter
     FileWriter outputfile = new FileWriter(file,true);
 
-    // create CSVWriter object filewriter object as parameter
     CSVWriter writer = new CSVWriter(outputfile);
 
-    // add data to csv
     String[] data1 = { s +" Laid at"+" "+ l +" "+ "&" + " Hatch at "+l1 };
     writer.writeNext(data1);
 
-    // closing writer connection
     writer.close();
   }
   catch (IOException e) {

@@ -16,11 +16,18 @@ public class FarmRunner {
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     Bird myChicken = new Chicken("potent hen");
+    Bird myDuck  = new Duck("Golden Duck");
 
-    scheduler.scheduleAtFixedRate(() -> simulate(myChicken), 2, 10 , TimeUnit.SECONDS);
+   //scheduler.scheduleAtFixedRate(() -> {simulate(myChicken); simulate((myDuck));}, 2, 10 , TimeUnit.SECONDS);
+
+
+   scheduler.scheduleAtFixedRate(() -> simulate(myChicken), 2, 1 , TimeUnit.SECONDS);
+   scheduler.scheduleAtFixedRate(() -> simulate(myDuck), 1, 2 ,TimeUnit.SECONDS);
+
   }
 
   static void simulate(Bird bird) {
     executorService.submit(bird::lay);
   }
+
 }
